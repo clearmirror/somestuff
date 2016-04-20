@@ -33,10 +33,10 @@ function getHistoryENtry(){
 class ServerProxy{
   login(un, pw){
     // authentication and set session stuff
-    return {
+    return Promise.resolve({
       status : 'success',
       token : '1234'
-    }
+    });
   }
 
   getForm(){

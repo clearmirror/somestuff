@@ -1,28 +1,40 @@
 import React from 'react';
-import { Nav, NavItem, Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
+import {Link, hashHistory} from 'react-router';
+import {connect} from 'react-redux';
+import { Nav, NavItem, Navbar, NavDropdown, MenuItem, Col } from 'react-bootstrap';
 import './navigation.scss';
 
-var Navigation = React.createClass({
-  render: function() {
+class Navigation extends React.Component{
+
+  goto(url){
+    hashHistory.push(url);
+  }
+  render() {
+    let signoutBtn = this.props.isGuest ? '' : (<NavItem>Signout</NavItem>)
     return (
       <Navbar className="app-nav row">
-        <div className='col-xs-12'>
+        <Col xs={12}>
         <Navbar.Header>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#/about">Home</NavItem>
-            <NavItem eventKey={2} href="#">Link</NavItem>
+            <NavItem onClick={this.goto.bind(this, '/forms')}>Forms</NavItem>
           </Nav>
           <Nav pullRight>
-            <NavItem>Login</NavItem>
+            {signoutBtn}
           </Nav>
         </Navbar.Collapse>
-        </div>
+        </Col>
       </Navbar>
     );
   }
-});
+}
 
-export default Navigation;
+function mapStateToProps(state){
+  return {
+    isGuest : state.isGuest
+  }
+}
+
+export default connect(mapStateToProps)(Navigation);

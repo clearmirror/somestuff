@@ -2,10 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './components/navigation/navigation';
-import { Router, Route, Link, hashHistory } from 'react-router';
+import { Router, Route, Link, hashHistory} from 'react-router';
 import HomePage from './pages/homepage/HomePage';
+import appReducers from './redux/reducer/reducers'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore } from 'redux';
 import './global.scss';
 
 var About = React.createClass({
@@ -25,7 +26,7 @@ var App = React.createClass({
         <Navigation />
         <Router history={hashHistory}>
           <Route path="/" component={HomePage}></Route>
-          <Route path="/about" component={About}/>
+          <Route path="/forms" component={About}/>
           <Route path="/*" component={NoMatch}/>
         </Router>
       </div>
@@ -45,7 +46,7 @@ var NoMatch = React.createClass({
 
 
 
-let store = createStore(App);
+let store = createStore(appReducers);
 
 ReactDOM.render(
   <Provider store={store}>

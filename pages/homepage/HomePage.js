@@ -6,6 +6,8 @@ import request from 'ajax-request';
 import user from '../../components/utility/user';
 import {connect} from 'react-redux';
 import server from '../../api/serverProxy';
+import {login, signout} from '../../redux/action/actions';
+import {hashHistory} from 'react-router';
 
 class HomePage extends React.Component{
   constructor(props){
@@ -13,16 +15,18 @@ class HomePage extends React.Component{
   }
 
   login(){
+    let {dispatch} = this.props;
     server.login().then(function(data){
-      console.log(data);
+      dispatch(login());
+      hashHistory.push('/forms');
     })
   }
   render() {
     let {isGuest} = this.props;
     let loginBtn = isGuest ?
       (<ButtonInput className='postform-btn'
-        onCLick={this.login} type="submit" value="Login" />) :
-      (<ButtonInput className='postform-btn' type="submit" value="Signout" />)
+        onClick={this.login.bind(this)} value="Login" />) :
+      (<ButtonInput className='postform-btn' value="Signout" />)
     return (
       <Row>
         <Col xs={12}>
@@ -44,4 +48,4 @@ function mapStateToProps(state){
 }
 
 
-export default HomePage;
+export default connect(mapStateToProps)(HomePage);

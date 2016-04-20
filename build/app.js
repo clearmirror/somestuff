@@ -64,6 +64,10 @@
 
 	var _HomePage2 = _interopRequireDefault(_HomePage);
 
+	var _reducers = __webpack_require__(684);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
 	var _reactRedux = __webpack_require__(659);
 
 	var _redux = __webpack_require__(665);
@@ -71,9 +75,6 @@
 	__webpack_require__(658);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// main.js
-
 
 	var About = _react2.default.createClass({
 	  displayName: 'About',
@@ -89,7 +90,8 @@
 	      )
 	    );
 	  }
-	});
+	}); // main.js
+
 
 	var App = _react2.default.createClass({
 	  displayName: 'App',
@@ -103,7 +105,7 @@
 	        _reactRouter.Router,
 	        { history: _reactRouter.hashHistory },
 	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _HomePage2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/about', component: About }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/forms', component: About }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/*', component: NoMatch })
 	      )
 	    );
@@ -126,7 +128,7 @@
 	  }
 	});
 
-	var store = (0, _redux.createStore)(App);
+	var store = (0, _redux.createStore)(_reducers2.default);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -19745,9 +19747,15 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(417);
+
+	var _reactRedux = __webpack_require__(659);
 
 	var _reactBootstrap = __webpack_require__(160);
 
@@ -19755,54 +19763,78 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Navigation = _react2.default.createClass({
-	  displayName: 'Navigation',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	  render: function render() {
-	    return _react2.default.createElement(
-	      _reactBootstrap.Navbar,
-	      { className: 'app-nav row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-xs-12' },
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Navigation = function (_React$Component) {
+	  _inherits(Navigation, _React$Component);
+
+	  function Navigation() {
+	    _classCallCheck(this, Navigation);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).apply(this, arguments));
+	  }
+
+	  _createClass(Navigation, [{
+	    key: 'goto',
+	    value: function goto(url) {
+	      _reactRouter.hashHistory.push(url);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var signoutBtn = this.props.isGuest ? '' : _react2.default.createElement(
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Signout'
+	      );
+	      return _react2.default.createElement(
+	        _reactBootstrap.Navbar,
+	        { className: 'app-nav row' },
 	        _react2.default.createElement(
-	          _reactBootstrap.Navbar.Header,
-	          null,
-	          _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Navbar.Collapse,
-	          null,
+	          _reactBootstrap.Col,
+	          { xs: 12 },
 	          _react2.default.createElement(
-	            _reactBootstrap.Nav,
+	            _reactBootstrap.Navbar.Header,
 	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.NavItem,
-	              { eventKey: 1, href: '#/about' },
-	              'Home'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.NavItem,
-	              { eventKey: 2, href: '#' },
-	              'Link'
-	            )
+	            _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
 	          ),
 	          _react2.default.createElement(
-	            _reactBootstrap.Nav,
-	            { pullRight: true },
+	            _reactBootstrap.Navbar.Collapse,
+	            null,
 	            _react2.default.createElement(
-	              _reactBootstrap.NavItem,
+	              _reactBootstrap.Nav,
 	              null,
-	              'Login'
+	              _react2.default.createElement(
+	                _reactBootstrap.NavItem,
+	                { onClick: this.goto.bind(this, '/forms') },
+	                'Forms'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Nav,
+	              { pullRight: true },
+	              signoutBtn
 	            )
 	          )
 	        )
-	      )
-	    );
-	  }
-	});
+	      );
+	    }
+	  }]);
 
-	exports.default = Navigation;
+	  return Navigation;
+	}(_react2.default.Component);
+
+	function mapStateToProps(state) {
+	  return {
+	    isGuest: state.isGuest
+	  };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Navigation);
 
 /***/ },
 /* 160 */
@@ -42482,6 +42514,10 @@
 
 	var _serverProxy2 = _interopRequireDefault(_serverProxy);
 
+	var _actions = __webpack_require__(686);
+
+	var _reactRouter = __webpack_require__(417);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42502,8 +42538,11 @@
 	  _createClass(HomePage, [{
 	    key: 'login',
 	    value: function login() {
+	      var dispatch = this.props.dispatch;
+
 	      _serverProxy2.default.login().then(function (data) {
-	        console.log(data);
+	        dispatch((0, _actions.login)());
+	        _reactRouter.hashHistory.push('/forms');
 	      });
 	    }
 	  }, {
@@ -42512,7 +42551,7 @@
 	      var isGuest = this.props.isGuest;
 
 	      var loginBtn = isGuest ? _react2.default.createElement(_reactBootstrap.ButtonInput, { className: 'postform-btn',
-	        onCLick: this.login, type: 'submit', value: 'Login' }) : _react2.default.createElement(_reactBootstrap.ButtonInput, { className: 'postform-btn', type: 'submit', value: 'Signout' });
+	        onClick: this.login.bind(this), value: 'Login' }) : _react2.default.createElement(_reactBootstrap.ButtonInput, { className: 'postform-btn', value: 'Signout' });
 	      return _react2.default.createElement(
 	        _reactBootstrap.Row,
 	        null,
@@ -42540,7 +42579,7 @@
 	  };
 	}
 
-	exports.default = HomePage;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(HomePage);
 
 /***/ },
 /* 475 */
@@ -47765,7 +47804,7 @@
 /* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -59950,10 +59989,10 @@
 	    key: 'login',
 	    value: function login(un, pw) {
 	      // authentication and set session stuff
-	      return {
+	      return Promise.resolve({
 	        status: 'success',
 	        token: '1234'
-	      };
+	      });
 	    }
 	  }, {
 	    key: 'getForm',
@@ -60221,6 +60260,83 @@
 	  }
 	})(this);
 
+
+/***/ },
+/* 684 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(665);
+
+	var _login = __webpack_require__(685);
+
+	var _login2 = _interopRequireDefault(_login);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var reducers = (0, _redux.combineReducers)({
+	  isGuest: _login2.default
+	});
+
+	exports.default = reducers;
+
+/***/ },
+/* 685 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = isGuest;
+
+	var _actions = __webpack_require__(686);
+
+	function isGuest() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.LOGIN_ACTION:
+	      return false;
+	    case _actions.SIGNOUT_ACTION:
+	      return true;
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 686 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.login = login;
+	exports.signout = signout;
+	var LOGIN_ACTION = exports.LOGIN_ACTION = 'LOGIN_ACTION';
+	var SIGNOUT_ACTION = exports.SIGNOUT_ACTION = 'SIGNOUT_ACTION';
+
+	function login() {
+	  return {
+	    type: LOGIN_ACTION
+	  };
+	}
+
+	function signout() {
+	  return {
+	    type: SIGNOUT_ACTION
+	  };
+	}
 
 /***/ }
 /******/ ]);
