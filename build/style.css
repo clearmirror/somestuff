@@ -1,0 +1,18 @@
+#appContainer .app-nav {
+  background-color: #eee;
+  border-radius: 0;
+  border: none; }
+  #appContainer .app-nav .login {
+    padding-right: 10px; }
+    #appContainer .app-nav .login .fa {
+      margin-right: 5px; }
+.postBtn {
+  margin-bottom: 14px; }
+
+.mapcontent {
+  height: 100vh; }
+
+.postform-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
