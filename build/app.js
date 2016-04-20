@@ -72,9 +72,16 @@
 
 	var _redux = __webpack_require__(665);
 
+	var _formPage = __webpack_require__(687);
+
+	var _formPage2 = _interopRequireDefault(_formPage);
+
 	__webpack_require__(658);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// main.js
+
 
 	var About = _react2.default.createClass({
 	  displayName: 'About',
@@ -90,8 +97,7 @@
 	      )
 	    );
 	  }
-	}); // main.js
-
+	});
 
 	var App = _react2.default.createClass({
 	  displayName: 'App',
@@ -105,7 +111,7 @@
 	        _reactRouter.Router,
 	        { history: _reactRouter.hashHistory },
 	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _HomePage2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/forms', component: About }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/forms', component: _formPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/*', component: NoMatch })
 	      )
 	    );
@@ -47804,7 +47810,7 @@
 /* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -59959,7 +59965,7 @@
 
 	// remove
 	function getEntry() {
-	  var id = Math.random() * 10000;
+	  var id = (Math.random() * 10000).toPrecision(3);
 	  return {
 	    nickname: 'nickname ' + id,
 	    location: 'location ' + id,
@@ -59969,7 +59975,7 @@
 	}
 
 	function getHistoryENtry() {
-	  var rnd = Math.random() * 10000;
+	  var rnd = (Math.random() * 10000).toPrecision(3);
 	  var timeStamp = Date.now() - rnd;
 
 	  return {
@@ -60337,6 +60343,196 @@
 	    type: SIGNOUT_ACTION
 	  };
 	}
+
+/***/ },
+/* 687 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _serverProxy = __webpack_require__(682);
+
+	var _serverProxy2 = _interopRequireDefault(_serverProxy);
+
+	var _reactBootstrap = __webpack_require__(160);
+
+	__webpack_require__(688);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FormPage = function (_React$Component) {
+	  _inherits(FormPage, _React$Component);
+
+	  function FormPage(props) {
+	    _classCallCheck(this, FormPage);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FormPage).call(this, props));
+
+	    _this.state = {
+	      data: []
+	    };
+	    var self = _this;
+	    _serverProxy2.default.getForm().then(function (data) {
+	      self.setState({
+	        data: data.content
+	      });
+	    });
+	    return _this;
+	  }
+
+	  _createClass(FormPage, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.state);
+	      var ele = this.state.data.map(function (d, i) {
+	        return _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          { key: i },
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3, className: 'nickname' },
+	            d.nickname
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3 },
+	            d.location
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 4, sm: 2 },
+	            d.price
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 4, sm: 2 },
+	            d.discount
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 4, sm: 2 },
+	            'Show history'
+	          )
+	        );
+	      });
+	      var eleMobile = this.state.data.map(function (d, i) {
+	        return _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          { key: i },
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            'Nickname'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            d.nickname
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            'Location'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            d.location
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            'Price'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 4 },
+	            d.price
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6 },
+	            'Discount'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 4 },
+	            d.discount
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 12 },
+	            'Show history'
+	          )
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'formPage' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'hidden-xs' },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'labelRow' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, sm: 3, className: 'nickname' },
+	              'Nickname'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, sm: 3 },
+	              'Location'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 4, sm: 2 },
+	              'Price'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 4, sm: 2 },
+	              'Discount'
+	            )
+	          ),
+	          ele
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'visible-xs' },
+	          eleMobile
+	        )
+	      );
+	    }
+	  }]);
+
+	  return FormPage;
+	}(_react2.default.Component);
+
+	exports.default = FormPage;
+
+/***/ },
+/* 688 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

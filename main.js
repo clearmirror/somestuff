@@ -7,6 +7,7 @@ import HomePage from './pages/homepage/HomePage';
 import appReducers from './redux/reducer/reducers'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux';
+import FormPage from './pages/form/formPage';
 import './global.scss';
 
 var About = React.createClass({
@@ -26,7 +27,7 @@ var App = React.createClass({
         <Navigation />
         <Router history={hashHistory}>
           <Route path="/" component={HomePage}></Route>
-          <Route path="/forms" component={About}/>
+          <Route path="/forms" component={FormPage}/>
           <Route path="/*" component={NoMatch}/>
         </Router>
       </div>

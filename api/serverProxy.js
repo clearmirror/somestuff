@@ -8,7 +8,7 @@ let config = {
 
 // remove
 function getEntry(){
-  let id = Math.random()*10000;
+  let id = (Math.random()*10000).toPrecision(3);
   return {
     nickname : 'nickname ' + id,
     location : 'location ' + id,
@@ -18,7 +18,7 @@ function getEntry(){
 }
 
 function getHistoryENtry(){
-  let rnd = Math.random()*10000;
+  let rnd = (Math.random()*10000).toPrecision(3);
   let timeStamp = Date.now() - rnd;
 
   return {
