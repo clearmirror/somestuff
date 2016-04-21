@@ -1,0 +1,38 @@
+$height : 40px;
+
+.edit-input{
+  position : relative;
+  height : $height;
+  margin-left : -15px;
+  margin-right : -15px;
+
+  .main-input{
+    border : 0px;
+    width : 100%;
+    padding-left : 15px;
+  }
+
+
+  .edit-btn{
+    position : absolute;
+    right : 0;
+    opacity : 0;
+  }
+
+  &:hover{
+    .main-input{
+      background-color : #ddd;
+    }
+    .edit-btn{
+      opacity : 1;
+    }
+  }
+
+  .controls{
+    position : absolute;
+    top : $height;
+    right : 0;
+    z-index : 999;
+  }
+
+}

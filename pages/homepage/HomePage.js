@@ -3,7 +3,6 @@ import GoogleMap from 'google-map-react';
 import {Col, Row, Button, Modal, Input, ButtonInput, Grid} from 'react-bootstrap';
 import './HomePage.scss';
 import request from 'ajax-request';
-import user from '../../components/utility/user';
 import {connect} from 'react-redux';
 import server from '../../api/serverProxy';
 import {login, signout} from '../../redux/action/actions';

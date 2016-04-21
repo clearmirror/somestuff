@@ -17,7 +17,7 @@ function getEntry(){
   }
 }
 
-function getHistoryENtry(){
+function getHistoryEntry(){
   let rnd = (Math.random()*10000).toPrecision(3);
   let timeStamp = Date.now() - rnd;
 
@@ -53,7 +53,7 @@ class ServerProxy{
   getHistory(formId = -1){
     let number = 10, ret = [];
     for(let i=0; i<number; i++){
-      ret.push(getHistoryENtry());
+      ret.push(getHistoryEntry());
     }
     return Promise.resolve({
       id : -1,

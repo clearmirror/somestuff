@@ -1,0 +1,44 @@
+.history-page{
+  font-size : 18px;
+  line-height : 2em;
+  .grey-bg{
+    background-color : #eee;
+    border: 1px solid white;
+  }
+  .control-row{
+    font-size : 18px;
+    line-height : 1em;
+    margin-bottom : 10px;
+    .toSep{
+      margin-left : 10px;
+      margin-right : 10px;
+    }
+    button{
+      margin-left : 15px;
+    }
+  }
+
+  .label-row{
+    font-size : 18px;
+    font-weight : 600;
+  }
+
+  .history-data-row{
+  }
+
+  .mobile-only{
+    .history-data-row{
+      border-bottom : 2px solid #ddd;
+    }
+  }
+}
+
+.sort-control{
+  position : relative;
+  display : inline-block;
+  margin-left : 5px;
+  button{
+    border : 0;
+    background-color : transparent;
+  }
+}

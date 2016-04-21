@@ -6,6 +6,24 @@
 
   }
 
+  .labelRow{
+    font-size : 18px;
+    font-weight: 800;
+  }
+
+  .grey{
+    background-color : #eee;
+    .edit-input{
+      .main-input{
+        background-color : #eee;
+        border : white 1px solid;
+        &:focus{
+          background-color : #fff;
+        }
+      }
+    }
+  }
+
   @media (max-screen : 767px){
     .row{
 

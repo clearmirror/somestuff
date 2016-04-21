@@ -11,6 +11,7 @@
   "dependencies": {
     "ajax-request": "^1.2.1",
     "babel-preset-react": "^6.5.0",
+    "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "dateformat": "^1.0.12",
     "extract-text-webpack-plugin": "^1.0.1",

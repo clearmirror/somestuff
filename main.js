@@ -8,6 +8,7 @@ import appReducers from './redux/reducer/reducers'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux';
 import FormPage from './pages/form/formPage';
+import HistoryPage from './pages/history/historyPage';
 import './global.scss';
 
 var About = React.createClass({
@@ -28,6 +29,7 @@ var App = React.createClass({
         <Router history={hashHistory}>
           <Route path="/" component={HomePage}></Route>
           <Route path="/forms" component={FormPage}/>
+          <Route path="/history/:id" component={HistoryPage}/>
           <Route path="/*" component={NoMatch}/>
         </Router>
       </div>
