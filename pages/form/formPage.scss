@@ -2,6 +2,14 @@
   font-size : 18px;
   line-height : 2em;
 
+  .pagination-container{
+    display : block;
+    text-align: center;
+    .pagination{
+      display: inline-block;
+    }
+  }
+
   .nickname{
 
   }

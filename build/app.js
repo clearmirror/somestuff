@@ -76,11 +76,11 @@
 
 	var _formPage2 = _interopRequireDefault(_formPage);
 
-	var _historyPage = __webpack_require__(686);
+	var _historyPage = __webpack_require__(685);
 
 	var _historyPage2 = _interopRequireDefault(_historyPage);
 
-	__webpack_require__(682);
+	__webpack_require__(687);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49295,7 +49295,7 @@
 /* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -60337,7 +60337,7 @@
 
 	__webpack_require__(681);
 
-	var _EditableInput = __webpack_require__(683);
+	var _EditableInput = __webpack_require__(682);
 
 	var _EditableInput2 = _interopRequireDefault(_EditableInput);
 
@@ -60349,6 +60349,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var recordPerPage = 5;
+
 	var FormPage = function (_React$Component) {
 	  _inherits(FormPage, _React$Component);
 
@@ -60358,12 +60360,14 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FormPage).call(this, props));
 
 	    _this.state = {
-	      data: []
+	      data: [],
+	      activePage: 1
 	    };
 	    var self = _this;
 	    _serverProxy2.default.getForm().then(function (data) {
 	      self.setState({
-	        data: data.content
+	        data: data.content,
+	        activePage: 1
 	      });
 	    });
 	    return _this;
@@ -60373,10 +60377,25 @@
 	    key: 'onHistoryBtnClicked',
 	    value: function onHistoryBtnClicked() {}
 	  }, {
+	    key: 'handleSelect',
+	    value: function handleSelect(dispatch, idxObj) {
+	      var idx = idxObj.eventKey;
+	      this.setState({
+	        activePage: idx
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.state);
-	      var ele = this.state.data.map(function (d, i) {
+	      var _state = this.state;
+	      var data = _state.data;
+	      var activePage = _state.activePage;
+
+	      var currentData = data.slice(recordPerPage * (activePage - 1), recordPerPage * activePage);
+
+	      console.log(currentData);
+	      //console.log(currentData);
+	      var ele = currentData.map(function (d, i) {
 	        return _react2.default.createElement(
 	          _reactBootstrap.Row,
 	          { key: i },
@@ -60411,7 +60430,7 @@
 	          )
 	        );
 	      });
-	      var eleMobile = this.state.data.map(function (d, i) {
+	      var eleMobile = currentData.map(function (d, i) {
 	        return _react2.default.createElement(
 	          _reactBootstrap.Row,
 	          { key: i },
@@ -60502,6 +60521,21 @@
 	          'div',
 	          { className: 'visible-xs' },
 	          eleMobile
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pagination-container' },
+	          _react2.default.createElement(_reactBootstrap.Pagination, {
+	            prev: true,
+	            next: true,
+	            first: true,
+	            last: true,
+	            ellipsis: true,
+	            boundaryLinks: true,
+	            items: Math.ceil(this.state.data.length / recordPerPage),
+	            maxButtons: 5,
+	            activePage: this.state.activePage,
+	            onSelect: this.handleSelect.bind(this) })
 	        )
 	      );
 	    }
@@ -60520,12 +60554,6 @@
 
 /***/ },
 /* 682 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 683 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60546,11 +60574,11 @@
 
 	var _reactBootstrap = __webpack_require__(240);
 
-	var _classnames = __webpack_require__(684);
+	var _classnames = __webpack_require__(683);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	__webpack_require__(685);
+	__webpack_require__(684);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60569,12 +60597,20 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditableInput).call(this, props));
 
 	    _this.state = {
-	      readonly: true
+	      readonly: true,
+	      value: _this.props.text
 	    };
 	    return _this;
 	  }
 
 	  _createClass(EditableInput, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        value: nextProps.text
+	      });
+	    }
+	  }, {
 	    key: 'onEditClick',
 	    value: function onEditClick() {
 	      this.setState({
@@ -60600,7 +60636,7 @@
 	        _react2.default.createElement('input', {
 	          ref: 'input',
 	          onBlur: this.onInputBlur.bind(this),
-	          className: 'main-input', defaultValue: text, readOnly: readonly }),
+	          className: 'main-input', value: this.state.value, readOnly: readonly }),
 	        _react2.default.createElement(
 	          _reactBootstrap.Button,
 	          {
@@ -60632,7 +60668,7 @@
 	exports.default = EditableInput;
 
 /***/ },
-/* 684 */
+/* 683 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -60686,13 +60722,13 @@
 
 
 /***/ },
-/* 685 */
+/* 684 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 686 */
+/* 685 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60713,7 +60749,7 @@
 
 	var _serverProxy2 = _interopRequireDefault(_serverProxy);
 
-	__webpack_require__(687);
+	__webpack_require__(686);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60722,6 +60758,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var recordPerPage = 5;
 
 	var SortControl = function (_React$Component) {
 	  _inherits(SortControl, _React$Component);
@@ -60765,17 +60803,27 @@
 
 	    var self = _this2;
 	    _this2.state = {
-	      data: []
+	      data: [],
+	      activePage: 1
 	    };
 	    _serverProxy2.default.getHistory().then(function (data) {
 	      self.setState({
-	        data: data.content
+	        data: data.content,
+	        activePage: 1
 	      });
 	    });
 	    return _this2;
 	  }
 
 	  _createClass(HistoryPage, [{
+	    key: 'handleSelect',
+	    value: function handleSelect(dispatch, idxObj) {
+	      var idx = idxObj.eventKey;
+	      this.setState({
+	        activePage: idx
+	      });
+	    }
+	  }, {
 	    key: 'sort',
 	    value: function sort(type, inverse) {
 	      var tmp = this.state.data;
@@ -60797,6 +60845,11 @@
 	    value: function render() {
 	      var _this3 = this;
 
+	      var _state = this.state;
+	      var data = _state.data;
+	      var activePage = _state.activePage;
+
+	      var currentData = data.slice(recordPerPage * (activePage - 1), recordPerPage * activePage);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'history-page' },
@@ -60857,7 +60910,7 @@
 	                highToLow: this.sort.bind(this, 'bank', true) })
 	            )
 	          ),
-	          this.state.data.map(function (d, i) {
+	          currentData.map(function (d, i) {
 	            return _react2.default.createElement(
 	              _reactBootstrap.Row,
 	              { key: i, className: 'history-data-row' },
@@ -60882,7 +60935,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'mobile-only visible-xs' },
-	          this.state.data.map(function (d, i) {
+	          currentData.map(function (d, i) {
 	            return _react2.default.createElement(
 	              _reactBootstrap.Row,
 	              { key: i, className: 'history-data-row' },
@@ -60930,6 +60983,21 @@
 	              )
 	            );
 	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pagination-container' },
+	          _react2.default.createElement(_reactBootstrap.Pagination, {
+	            prev: true,
+	            next: true,
+	            first: true,
+	            last: true,
+	            ellipsis: true,
+	            boundaryLinks: true,
+	            items: Math.ceil(this.state.data.length / recordPerPage),
+	            maxButtons: 5,
+	            activePage: this.state.activePage,
+	            onSelect: this.handleSelect.bind(this) })
 	        )
 	      );
 	    }
@@ -60939,6 +61007,12 @@
 	}(_react2.default.Component);
 
 	exports.default = HistoryPage;
+
+/***/ },
+/* 686 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 /* 687 */

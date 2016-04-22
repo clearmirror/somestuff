@@ -1,21 +1,24 @@
 import React from 'react';
 import server from '../../api/serverProxy';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Pagination } from 'react-bootstrap';
 import {Link, hashHistory} from 'react-router';
 import './formPage.scss';
 import EditableInput from '../../components/editinput/EditableInput';
 
+const recordPerPage = 5;
 class FormPage extends React.Component{
 
   constructor(props){
     super(props);
     this.state = {
-      data : []
+      data : [],
+      activePage : 1
     }
     let self = this;
     server.getForm().then(function(data){
       self.setState({
-        data : data.content
+        data : data.content,
+        activePage : 1
       })
     })
   }
@@ -24,9 +27,21 @@ class FormPage extends React.Component{
 
   }
 
+  handleSelect(dispatch, idxObj){
+    let idx = idxObj.eventKey;
+    this.setState({
+      activePage : idx
+    });
+
+  }
+
   render(){
-    console.log(this.state);
-    let ele = this.state.data.map((d, i) => {
+    let {data, activePage} = this.state;
+    let currentData =data.slice(recordPerPage*(activePage-1), recordPerPage*activePage);
+
+    console.log(currentData);
+    //console.log(currentData);
+    let ele = currentData.map((d, i) => {
       return (
         <Row key={i}>
           <Col xs={6} sm={3} className='nickname grey'>
@@ -47,7 +62,7 @@ class FormPage extends React.Component{
         </Row>
       )
     })
-    let eleMobile = this.state.data.map((d, i) => {
+    let eleMobile = currentData.map((d, i) => {
       return (
         <Row key={i}>
           <Col xs={6} className='grey'>Nickname</Col>
@@ -87,6 +102,19 @@ class FormPage extends React.Component{
         </div>
         <div className='visible-xs'>
           {eleMobile}
+        </div>
+        <div className='pagination-container'>
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            boundaryLinks
+            items={Math.ceil(this.state.data.length/recordPerPage)}
+            maxButtons={5}
+            activePage={this.state.activePage}
+            onSelect={this.handleSelect.bind(this)} />
         </div>
       </div>
     );

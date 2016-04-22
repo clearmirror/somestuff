@@ -9,7 +9,13 @@ class EditableInput extends React.Component{
     super(props);
     this.state = {
       readonly : true,
+      value : this.props.text
     }
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      value : nextProps.text
+    })
   }
   onEditClick(){
     this.setState({
@@ -30,7 +36,7 @@ class EditableInput extends React.Component{
         <input
           ref='input'
           onBlur={this.onInputBlur.bind(this)}
-          className='main-input' defaultValue={text} readOnly={readonly} />
+          className='main-input' value={this.state.value} readOnly={readonly} />
         <Button
           onClick={this.onEditClick.bind(this)}
           className={cx('edit-btn', {hidden : !readonly})}>Edit</Button>

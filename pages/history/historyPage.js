@@ -1,7 +1,9 @@
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Pagination } from 'react-bootstrap';
 import server from '../../api/serverProxy';
 import './historyPage.scss';
+
+const recordPerPage = 5;
 
 class SortControl extends React.Component{
 
@@ -24,13 +26,22 @@ class HistoryPage extends React.Component{
     super(props);
     let self = this;
     this.state = {
-      data : []
+      data : [],
+      activePage : 1
     }
     server.getHistory().then((data) => {
       self.setState({
-        data : data.content
+        data : data.content,
+        activePage : 1
       });
     })
+  }
+
+  handleSelect(dispatch, idxObj){
+    let idx = idxObj.eventKey;
+    this.setState({
+      activePage : idx
+    });
   }
 
   sort(type, inverse){
@@ -45,6 +56,8 @@ class HistoryPage extends React.Component{
     })
   }
   render(){
+    let {data, activePage} = this.state;
+    let currentData =data.slice(recordPerPage*(activePage-1), recordPerPage*activePage);
     return (
       <div className='history-page'>
         <Row className='control-row'>
@@ -77,7 +90,7 @@ class HistoryPage extends React.Component{
             </Col>
           </Row>
           {
-            this.state.data.map((d, i) => (
+            currentData.map((d, i) => (
               <Row key={i} className='history-data-row'>
                 <Col sm={4}>{d.time}</Col>
                 <Col sm={4} className='grey-bg'>{d.price}</Col>
@@ -88,7 +101,7 @@ class HistoryPage extends React.Component{
         </div>
         <div className='mobile-only visible-xs'>
         {
-          this.state.data.map((d, i) => (
+          currentData.map((d, i) => (
             <Row key={i} className='history-data-row'>
               <Col xs={6}>
                 Time
@@ -117,6 +130,19 @@ class HistoryPage extends React.Component{
             </Row>
           ))
         }
+        </div>
+        <div className='pagination-container'>
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            boundaryLinks
+            items={Math.ceil(this.state.data.length/recordPerPage)}
+            maxButtons={5}
+            activePage={this.state.activePage}
+            onSelect={this.handleSelect.bind(this)} />
         </div>
       </div>
     )
