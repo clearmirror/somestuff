@@ -13,11 +13,7 @@ import './global.scss';
 
 var About = React.createClass({
   render: function() {
-    return (
-      <div>
-        <h1>This is about</h1>
-      </div>
-    );
+    return null;
   }
 });
 
